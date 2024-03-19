@@ -1,6 +1,5 @@
 package br.com.fiap.appbreathe.pages
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -23,8 +22,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.fiap.appbreathe.R
 import br.com.fiap.appbreathe.components.CardAirQuality
+import br.com.fiap.appbreathe.components.CardSaude
 import br.com.fiap.appbreathe.components.Navbar
 import br.com.fiap.appbreathe.components.Poluente
+import br.com.fiap.appbreathe.model.PoluenteModel
+import br.com.fiap.appbreathe.model.SaudeModel
 
 @Composable
 fun Home(locationList: List<Double>) {
@@ -32,25 +34,24 @@ fun Home(locationList: List<Double>) {
     var clicked = remember {
         mutableStateOf(true)
     }
-    val lista = listOf(
-        Poluente(index= 1, name ="PM25", composition = "30 μg/m3"),
-        Poluente(index= 2, name ="PM25", composition = "30 μg/m3"),
-        Poluente(index= 3, name ="PM25", composition = "30 μg/m3")
-    )
 
     Column (modifier = Modifier
-        .fillMaxSize()){
-        Column (modifier = Modifier
-            .height(height = 210.dp)
-            .background(color = primaryColor)
-            .fillMaxWidth()){
-            Text(text = "Latitude: ${locationList.first()} e Longitude: ${locationList[1]}",
-                color = Color.White)
+        .fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .height(height = 210.dp)
+                .background(color = primaryColor)
+                .fillMaxWidth()
+        ) {
+            Text(
+                text = "Latitude: ${locationList.first()} e Longitude: ${locationList[1]}",
+                color = Color.White
+            )
             Spacer(modifier = Modifier.height(50.dp))
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.fillMaxWidth()
-            ){
+            ) {
                 Text(
                     text = "Qualidade do ar:",
                     color = Color.White,
@@ -61,22 +62,48 @@ fun Home(locationList: List<Double>) {
             }
 
         }
-        CardAirQuality(modifier = Modifier
-            .align(Alignment.CenterHorizontally)
-            .offset(y = (-76).dp),
+        CardAirQuality(
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .offset(y = (-76).dp),
             iqaNumber = "60",
             textQuality = "Moderada",
-            barNumber = 10.0)
+            barNumber = 10.0
+        )
 
-        Column (modifier = Modifier
-            .align(Alignment.CenterHorizontally)
-            .offset(y = (-50).dp)){
-            Navbar(poluentes = clicked.value){ state ->
+        Column(
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .offset(y = (-50).dp)
+        ) {
+            Navbar(poluentes = clicked.value) { state ->
                 clicked.value = state
             }
+            val poluente = PoluenteModel(
+                index = 1,
+                name = "PM25",
+                composition = "30 μg/m3"
+            )
+            val saude = SaudeModel(
+                categoria = "Geral",
+                texto = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
+            )
 
-            Poluente(index= 1, name ="PM25", composition = "30 μg/m3")
+            val listaPoluentes = listOf(poluente, poluente, poluente)
+            val listaSaude = listOf(saude, saude, saude)
+            LazyColumn() {
+                    if (clicked.value) {
+                        items(listaPoluentes) { poluente ->
+                            Poluente(poluente = poluente)
+                        }
+                    } else {
+                        items(listaSaude) { saude ->
+                            CardSaude(model = saude)
+                        }
+                    }
+                
+
+            }
         }
     }
-
 }

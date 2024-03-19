@@ -21,9 +21,8 @@ fun getLocation(context: Context, callback: (List<Double>) -> Unit) {
         }
 
         override fun onLocationError(exception: Exception) {
-            // Trate o erro de obtenção de localização aqui
             Log.e("meuAPP", "Erro ao obter a localização: ${exception.message}")
-            callback(emptyList()) // Chama o callback com uma lista vazia em caso de erro
+            callback(emptyList())
         }
     })
 }
