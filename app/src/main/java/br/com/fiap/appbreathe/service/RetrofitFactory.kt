@@ -3,7 +3,7 @@ package br.com.fiap.appbreathe.service
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitFactory {
+class RetrofitFactoryAir {
 
     private val URL = "https://airquality.googleapis.com/v1/"
 

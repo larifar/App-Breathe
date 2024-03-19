@@ -27,12 +27,21 @@ import br.com.fiap.appbreathe.components.Navbar
 import br.com.fiap.appbreathe.components.Poluente
 import br.com.fiap.appbreathe.model.PoluenteModel
 import br.com.fiap.appbreathe.model.SaudeModel
+import br.com.fiap.appbreathe.service.LocationCity
+import br.com.fiap.appbreathe.util.formatCityToString
+import br.com.fiap.appbreathe.util.getCity
+import kotlinx.coroutines.runBlocking
 
 @Composable
 fun Home(locationList: List<Double>) {
     val primaryColor = colorResource(id = R.color.sky_blue)
     var clicked = remember {
         mutableStateOf(true)
+    }
+    val loc: LocationCity
+
+    runBlocking {
+        loc = getCity(locationList.first(), locationList[1])
     }
 
     Column (modifier = Modifier
@@ -44,7 +53,7 @@ fun Home(locationList: List<Double>) {
                 .fillMaxWidth()
         ) {
             Text(
-                text = "Latitude: ${locationList.first()} e Longitude: ${locationList[1]}",
+                text = formatCityToString(loc),
                 color = Color.White
             )
             Spacer(modifier = Modifier.height(50.dp))

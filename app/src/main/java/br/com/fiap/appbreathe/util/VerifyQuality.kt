@@ -4,7 +4,7 @@ import android.util.Log
 import br.com.fiap.appbreathe.service.AirQualityResponse
 import br.com.fiap.appbreathe.service.Location
 import br.com.fiap.appbreathe.service.RequestPostBody
-import br.com.fiap.appbreathe.service.RetrofitFactory
+import br.com.fiap.appbreathe.service.RetrofitFactoryAir
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,7 +23,7 @@ fun apiConnection() {
     )
 
     val key = "AIzaSyCbwH9qhu8aJ9ngzBv22HKxrkvkz378778"
-    val service =RetrofitFactory().getAirService()
+    val service =RetrofitFactoryAir().getAirService()
     val call = service.getCurrentConditions(requestPostBody, key)
 
     call.enqueue(object : Callback<AirQualityResponse> {
