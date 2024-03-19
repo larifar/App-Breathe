@@ -1,5 +1,6 @@
 package br.com.fiap.appbreathe.pages
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -7,8 +8,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,6 +29,14 @@ import br.com.fiap.appbreathe.components.Poluente
 @Composable
 fun Home(locationList: List<Double>) {
     val primaryColor = colorResource(id = R.color.sky_blue)
+    var clicked = remember {
+        mutableStateOf(true)
+    }
+    val lista = listOf(
+        Poluente(index= 1, name ="PM25", composition = "30 μg/m3"),
+        Poluente(index= 2, name ="PM25", composition = "30 μg/m3"),
+        Poluente(index= 3, name ="PM25", composition = "30 μg/m3")
+    )
 
     Column (modifier = Modifier
         .fillMaxSize()){
@@ -58,7 +71,10 @@ fun Home(locationList: List<Double>) {
         Column (modifier = Modifier
             .align(Alignment.CenterHorizontally)
             .offset(y = (-50).dp)){
-            Navbar(true)
+            Navbar(poluentes = clicked.value){ state ->
+                clicked.value = state
+            }
+
             Poluente(index= 1, name ="PM25", composition = "30 μg/m3")
         }
     }

@@ -25,13 +25,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.fiap.appbreathe.R
+import br.com.fiap.appbreathe.model.PoluenteModel
 
 @Composable
-fun Poluente(
-    index: Int,
-    name: String,
-    composition: String
-) {
+fun Poluente(poluente : PoluenteModel) {
     val blackColor = colorResource(id = R.color.black_lighter)
 
     Row(
@@ -54,18 +51,18 @@ fun Poluente(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(text = "${index}.", color = blackColor)
+                Text(text = "${poluente.index}.", color = blackColor)
             }
         }
         Column {
             Text(
-                text = name,
+                text = poluente.name,
                 color = blackColor,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 17.sp
             )
             Text(
-                text = "Composição: ${composition}",
+                text = "Composição: ${poluente.name}",
                 color = blackColor,
                 fontSize = 16.5.sp
             )
